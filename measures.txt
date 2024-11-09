@@ -1,0 +1,109 @@
+Total Sales = SUM(shipments[Sales])
+Total Boxes = SUM(shipments[Boxes])
+Total Shipments = COUNTROWS(shipments)
+Total Costs = SUM(shipments[Costs])
+LBS Count = CALCULATE([Total Shipments], shipments[Boxes] < 50)
+LBS % = DIVIDE([LBS Count], [Total Shipments])
+
+Total  Sales (prev month) = CALCULATE([Total Sales], PREVIOUSMONTH('calendar'[Date])
+MoM Sales Change % = 
+    var this_month = [Total Sales]
+    var prev_month =  [Total  Sales (prev month)]
+RETURN
+    DIVIDE(this_month - prev_month, prev_month)
+
+Total Boxes (prev month) = CALCULATE([Total Boxes], PREVIOUSMONTH('calendar'[Date]))
+MoM Boxes Change % = 
+    var this_month = [Total Boxes]
+    var prev_month = [Total Boxes (prev month)]
+RETURN 
+    DIVIDE(this_month - prev_month, prev_month)
+
+Total Cost (prev month) = CALCULATE([Total Costs], PREVIOUSMONTH('calendar'[Date])
+MoM Costs Change % = 
+    var this_month = [Total Costs]
+    var prev_month = [Total Cost (prev month)]
+RETURN
+    DIVIDE(this_month - prev_month, prev_month)
+
+Total Profit (prev month) = CALCULATE([Total Profit], PREVIOUSMONTH('calendar'[Date]))
+MoM Profit Change % = 
+    var this_month = [Total Profit]
+    var prev_month = [Total Profit (prev month)]
+RETURN 
+    DIVIDE(this_month - prev_month, prev_month)
+
+Total Shipments (prev month) = CALCULATE([Total Shipments], PREVIOUSMONTH('calendar'[Date]))
+MoM Shipment Change % = 
+    var this_month = [Total Shipments]
+    var prev_month = [Total Shipments (prev month)]
+RETURN
+    DIVIDE(this_month - prev_month, prev_month)
+
+Latest Month Measure Calculations:
+  Lastest Month = LASTDATE('calendar'[Start of Month])
+
+Sales:
+	Total Sales Latest Month = 
+	    var ld = [Lastest Date]
+	RETURN 
+	    CALCULATE([Total Sales], 'calendar'[Start of Month]=ld)
+	
+	Latest MoM Sales Change % = 
+	    var ld = [Latest Date]
+	    var this_month_sales = [Total Sales Latest Month]
+	    var prev_month_sales= CALCULATE([Total Sales], 'calendar'[Start of Month] = EDATE(ld, -1))
+	RETURN
+	    DIVIDE(this_month_sales-prev_month_sales, prev_month_sales)
+
+Boxes:
+	Total Boxes Latest Month = 
+	    var ld = [Latest Date]
+	RETURN 
+	    CALCULATE([Total Boxes], 'calendar'[Start of Month]=ld)
+	
+	Latest MoM Boxes Change % = 
+	    var ld = [Latest Date]
+	    var this_month_boxes = [Total Boxes Latest Month]
+	    var prev_month_boxes = CALCULATE([Total Boxes], 'calendar'[Start of Month] = EDATE(ld, -1))
+	RETURN
+	    DIVIDE(this_month_boxes-prev_month_boxes, prev_month_boxes)
+	
+Shipments:
+	Total Shipments Latest Month = 
+		var ld = [Latest Date]
+	RETURN 
+		CALCULATE([Total Shipments], 'calendar'[Start of Month]=ld)
+	
+	Latest MoM Shipments Change % = 
+		var ld = [Latest Date]
+		var this_month_shipments = [Total Shipments Latest Month]
+		var prev_month_shipments = CALCULATE([Total Shipments], 'calendar'[Start of Month] = EDATE(ld, -1))
+	RETURN
+	DIVIDE(this_month_shipments-prev_month_boxes, prev_month_boxes)
+
+Costs:
+    Total Costs Latest Month = 
+    	var ld = [Latest Date]
+    RETURN 
+    	CALCULATE([Total Costs], 'calendar'[Start of Month]=ld)
+    
+    Latest MoM Costs Change % = 
+    	var ld = [Latest Date]
+    	var this_month_costs = [Total Costs Latest Month]
+    	var prev_month_costs = CALCULATE([Total Costs], 'calendar'[Start of Month] = EDATE(ld, -1))
+    RETURN
+    DIVIDE(this_month_costs-prev_month_costs, prev_month_costs)
+
+Profits:
+    Total Profit Latest Month = 
+    	var ld = [Latest Date]
+    RETURN 
+    	CALCULATE([Total Profit], 'calendar'[Start of Month]=ld)
+    
+    Latest MoM Profit Change % = 
+    	var ld = [Latest Date]
+    	var this_month_profit = [Total Profit Latest Month]
+    	var prev_month_profit = CALCULATE([Total Profit], 'calendar'[Start of Month] = EDATE(ld, -1))
+    RETURN
+    DIVIDE(this_month_profit-prev_month_profit, prev_month_profit)
